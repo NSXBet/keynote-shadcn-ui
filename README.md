@@ -69,13 +69,13 @@ export default function Presentation() {
 
 `<Deck>` gives you keyboard nav (←/→, Home/End), an `N / M` pager, a top progress hairline, and an **ESC-triggered outline grid** of all slides for quick navigation.
 
-## Usage (no-build, CDN)
+## Usage (no-build, vendored UMD)
 
-Use the self-contained UMD bundle (React + Recharts included) from a plain `<script>` tag:
+We don't publish to a CDN yet. For a no-build deck, copy the self-contained UMD bundle and theme tokens (built by `npm run build`) into your deck folder — e.g. `vendor/` — and load them with relative paths. The bundle includes React + Recharts, so a plain `<script>` tag is all you need:
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/keynote-shadcn-ui/themes/cinematic.css">
-<script src="https://unpkg.com/keynote-shadcn-ui/dist/keynote-shadcn-ui.umd.js"></script>
+<link rel="stylesheet" href="vendor/tokens.css">
+<script src="vendor/keynote-shadcn-ui.umd.js"></script>
 <script>
   const K = window.KeynoteShadcnUI
   const h = K.React.createElement
@@ -84,6 +84,8 @@ Use the self-contained UMD bundle (React + Recharts included) from a plain `<scr
   )
 </script>
 ```
+
+Get the two files from `dist/keynote-shadcn-ui.umd.js` and `src/themes/tokens.css` (or `vendor/` in an existing deck). A real CDN path (unpkg/jsDelivr) will exist once we publish to npm — it's not available today.
 
 ## Components
 

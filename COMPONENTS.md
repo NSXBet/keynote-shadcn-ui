@@ -71,6 +71,6 @@ All take `config: ChartConfig` (`{key:{label,color}}`) and render a themed toolt
 
 ## Agent quick-start
 
-1. `npm install keynote-shadcn-ui react react-dom recharts`
+1. `npm install NSXBet/keynote-shadcn-ui react react-dom recharts` (GitHub; npm registry name not published yet)
 2. `import "keynote-shadcn-ui/themes/cinematic.css"`
 3. Wrap slides in `<Deck>`, use components above. Run `npm run dev` here and open Storybook to see every component live in both themes.
