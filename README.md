@@ -4,9 +4,13 @@ A themable design system for **keynote presentations** — React components for 
 
 ## Install
 
+From GitHub (current):
+
 ```bash
-npm install keynote-shadcn-ui react react-dom recharts
+npm install NSXBet/keynote-shadcn-ui react react-dom recharts
 ```
+
+(From npm, once published: `npm install keynote-shadcn-ui react react-dom recharts`.)
 
 `react`, `react-dom`, and `recharts` are **peer dependencies** — your app provides them (any modern React, `^18 || ^19`).
 
