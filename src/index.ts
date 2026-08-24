@@ -47,3 +47,16 @@ export { Code, CodeBlock } from "./components/Code"
 export { Section, SectionDivider, SectionSlide, Stat, Quote, SpeakerNotes } from "./components/Keynote"
 export { Deck } from "./components/Deck"
 export type { DeckProps } from "./components/Deck"
+export { MaskedImage } from "./components/MaskedImage"
+export type { MaskedImageProps, MaskShape } from "./components/MaskedImage"
+export {
+  TitleSlide,
+  AgendaSlide,
+  StatSlide,
+  QuoteSlide,
+  TwoColumnSlide,
+  TeamSlide,
+  ClosingSlide,
+} from "./components/Molecules"
+export { ConeFunnel, Honeycomb, PricingCards } from "./components/Infographics"
+export type { ConeTier, HoneycombCell, PricingTier } from "./components/Infographics"

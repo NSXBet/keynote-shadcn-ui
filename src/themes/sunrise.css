@@ -1,0 +1,27 @@
+/* sunrise: light slides, single orange accent (startup pitch-deck ref) */
+@import "./tokens.css";
+
+.kn-sunrise {
+  --kn-background: #f5f5f7;
+  --kn-foreground: #14161a;
+  --kn-muted: #6b7280;
+  --kn-card: #ffffff;
+  --kn-border: #e8e8ec;
+  --kn-border-strong: #d1d1d8;
+
+  --kn-primary: #f2621c;
+  --kn-primary-foreground: #ffffff;
+  --kn-accent: #ff7a00;
+  --kn-success: #f2621c;
+  --kn-warning: #d97706;
+  --kn-danger: #e8221e;
+
+  --kn-chart-1: #f2621c;
+  --kn-chart-2: #14161a;
+  --kn-chart-3: #ff7a00;
+  --kn-chart-4: #6b7280;
+  --kn-chart-5: #2b2b2b;
+  --kn-chart-6: #fb923c;
+  --kn-chart-7: #9ca3af;
+  --kn-chart-8: #fdba74;
+}

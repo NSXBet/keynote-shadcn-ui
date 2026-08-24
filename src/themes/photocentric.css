@@ -1,0 +1,27 @@
+/* photocentric: near-black + steel, arch/photographic masks (Canva photocentric corporate DNA) */
+@import "./tokens.css";
+
+.kn-photocentric {
+  --kn-background: #0d0e0f;
+  --kn-foreground: #ffffff;
+  --kn-muted: #7e8387;
+  --kn-card: #16181a;
+  --kn-border: #26292c;
+  --kn-border-strong: #3a3e42;
+
+  --kn-primary: #d8dad7;
+  --kn-primary-foreground: #0d0e0f;
+  --kn-accent: #d8dad7;
+  --kn-success: #9aa0a4;
+  --kn-warning: #c2c6c9;
+  --kn-danger: #e0e2e4;
+
+  --kn-chart-1: #d8dad7;
+  --kn-chart-2: #7e8387;
+  --kn-chart-3: #4a4e52;
+  --kn-chart-4: #b0b4b8;
+  --kn-chart-5: #5a5e62;
+  --kn-chart-6: #ffffff;
+  --kn-chart-7: #3a3e42;
+  --kn-chart-8: #8a8e92;
+}

@@ -16,7 +16,12 @@
     },
     "./themes/brand.css": "./src/themes/brand.css",
     "./themes/cinematic.css": "./src/themes/cinematic.css",
-    "./themes/tokens.css": "./src/themes/tokens.css"
+    "./themes/tokens.css": "./src/themes/tokens.css",
+    "./themes/corporate-blue.css": "./src/themes/corporate-blue.css",
+    "./themes/minimalist-dark.css": "./src/themes/minimalist-dark.css",
+    "./themes/photocentric.css": "./src/themes/photocentric.css",
+    "./themes/finance-diagonal.css": "./src/themes/finance-diagonal.css",
+    "./themes/sunrise.css": "./src/themes/sunrise.css"
   },
   "files": [
     "dist",

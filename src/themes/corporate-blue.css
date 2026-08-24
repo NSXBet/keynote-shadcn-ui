@@ -1,0 +1,27 @@
+/* corporate-blue: white + cobalt + circular motifs (Canva blue-white / Pinterest growth-deck DNA) */
+@import "./tokens.css";
+
+.kn-corporate-blue {
+  --kn-background: #ffffff;
+  --kn-foreground: #0f172a;
+  --kn-muted: #64748b;
+  --kn-card: #f1f5fb;
+  --kn-border: #dbeafe;
+  --kn-border-strong: #bfdbfe;
+
+  --kn-primary: #1d4ed8;
+  --kn-primary-foreground: #ffffff;
+  --kn-accent: #2563eb;
+  --kn-success: #0ea5e9;
+  --kn-warning: #f59e0b;
+  --kn-danger: #dc2626;
+
+  --kn-chart-1: #1d4ed8;
+  --kn-chart-2: #0ea5e9;
+  --kn-chart-3: #0f172a;
+  --kn-chart-4: #7c3aed;
+  --kn-chart-5: #475569;
+  --kn-chart-6: #2563eb;
+  --kn-chart-7: #64748b;
+  --kn-chart-8: #38bdf8;
+}

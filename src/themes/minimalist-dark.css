@@ -1,0 +1,27 @@
+/* minimalist-dark: black/gray brutalist typography (Canva minimalist portfolio DNA) */
+@import "./tokens.css";
+
+.kn-minimalist-dark {
+  --kn-background: #0a0a0a;
+  --kn-foreground: #f5f5f5;
+  --kn-muted: #9ca3af;
+  --kn-card: #141414;
+  --kn-border: #262626;
+  --kn-border-strong: #404040;
+
+  --kn-primary: #e5e5e5;
+  --kn-primary-foreground: #0a0a0a;
+  --kn-accent: #d4d4d4;
+  --kn-success: #a3a3a3;
+  --kn-warning: #d4d4d4;
+  --kn-danger: #e5e5e5;
+
+  --kn-chart-1: #e5e5e5;
+  --kn-chart-2: #a3a3a3;
+  --kn-chart-3: #525252;
+  --kn-chart-4: #d4d4d4;
+  --kn-chart-5: #737373;
+  --kn-chart-6: #f5f5f5;
+  --kn-chart-7: #404040;
+  --kn-chart-8: #8a8a8a;
+}

@@ -1,0 +1,27 @@
+/* finance-diagonal: charcoal + blue diagonal blocks (Canva finance report DNA) */
+@import "./tokens.css";
+
+.kn-finance-diagonal {
+  --kn-background: #14161a;
+  --kn-foreground: #ffffff;
+  --kn-muted: #aeb4bc;
+  --kn-card: #1c1f24;
+  --kn-border: #2a2e35;
+  --kn-border-strong: #3d434c;
+
+  --kn-primary: #1e88e5;
+  --kn-primary-foreground: #ffffff;
+  --kn-accent: #2d9cdb;
+  --kn-success: #2d9cdb;
+  --kn-warning: #aeb4bc;
+  --kn-danger: #e5534b;
+
+  --kn-chart-1: #1e88e5;
+  --kn-chart-2: #2d9cdb;
+  --kn-chart-3: #ffffff;
+  --kn-chart-4: #aeb4bc;
+  --kn-chart-5: #4fc3f7;
+  --kn-chart-6: #1976d2;
+  --kn-chart-7: #616a74;
+  --kn-chart-8: #90caf9;
+}
