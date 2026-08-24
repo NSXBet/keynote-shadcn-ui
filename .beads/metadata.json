@@ -1,0 +1,7 @@
+{
+  "database": "dolt",
+  "backend": "dolt",
+  "dolt_mode": "embedded",
+  "dolt_database": "keynote_shadcn_ui",
+  "project_id": "f3ef9cdd-05fe-43b2-b108-1769a8c0ed66"
+}
