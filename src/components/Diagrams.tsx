@@ -166,11 +166,6 @@ export function Cycle({ steps, centerLabel }: { steps: React.ReactNode[]; center
   return (
     <div className="kn-cycle" style={{ position: "relative", width: size, height: size, margin: "0 auto" }}>
       <svg width={size} height={size} style={{ position: "absolute", inset: 0 }}>
-        <defs>
-          <marker id="kn-cycle-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--kn-muted)" />
-          </marker>
-        </defs>
         <circle
           cx={r}
           cy={r}
@@ -178,10 +173,27 @@ export function Cycle({ steps, centerLabel }: { steps: React.ReactNode[]; center
           fill="none"
           stroke="var(--kn-border-strong)"
           strokeWidth="1.5"
-          markerEnd="url(#kn-cycle-arrow)"
-          strokeDasharray={`${(2 * Math.PI * ring) / n - 14} 14`}
-          transform={`rotate(${-90 + 360 / (2 * n)} ${r} ${r})`}
+          strokeDasharray="4 6"
         />
+        {steps.map((_, i) => {
+          // chevron at the boundary between step i and step i+1 (clockwise)
+          const a = ((i + 0.5) / n) * 2 * Math.PI - Math.PI / 2
+          const px = r + ring * Math.cos(a)
+          const py = r + ring * Math.sin(a)
+          const deg = (a * 180) / Math.PI + 90 // tangent direction (clockwise)
+          return (
+            <path
+              key={i}
+              d="M -5 -4 L 2 0 L -5 4"
+              fill="none"
+              stroke="var(--kn-accent)"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              transform={`translate(${px} ${py}) rotate(${deg})`}
+            />
+          )
+        })}
       </svg>
       {centerLabel != null && (
         <div
@@ -241,11 +253,32 @@ export function Comparison({
       style={{
         ...box(),
         textAlign: "left",
-        borderTop: `3px solid ${tone === "danger" ? "var(--kn-danger)" : "var(--kn-success)"}`,
+        border: "1px solid var(--kn-border)",
         flex: "1 1 0",
       }}
     >
-      <div style={{ color: "var(--kn-muted)", fontSize: "0.8rem", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "0.5rem" }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "0.5rem",
+          color: "var(--kn-muted)",
+          fontSize: "0.8rem",
+          textTransform: "uppercase",
+          letterSpacing: "0.1em",
+          marginBottom: "0.5rem",
+        }}
+      >
+        <span
+          aria-hidden
+          style={{
+            width: "0.6em",
+            height: "0.6em",
+            borderRadius: 2,
+            background: tone === "danger" ? "var(--kn-danger)" : "var(--kn-success)",
+            flex: "0 0 auto",
+          }}
+        />
         {title}
       </div>
       <div style={{ color: "var(--kn-foreground)", fontWeight: 400 }}>{body}</div>

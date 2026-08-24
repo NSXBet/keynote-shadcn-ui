@@ -7,6 +7,7 @@ export function Kicker({ children, style, ...p }: React.HTMLAttributes<HTMLSpanE
   return (
     <span
       style={{
+        fontFamily: "var(--kn-font-sans)",
         display: "block",
         fontSize: "0.85rem",
         textTransform: "uppercase",
@@ -69,6 +70,7 @@ export function Body({ children, style, ...p }: React.HTMLAttributes<HTMLParagra
   return (
     <p
       style={{
+        fontFamily: "var(--kn-font-sans)",
         fontSize: "var(--kn-text-body)",
         lineHeight: 1.45,
         color: "var(--kn-foreground)",
@@ -85,6 +87,7 @@ export function Caption({ children, style, ...p }: React.HTMLAttributes<HTMLPara
   return (
     <p
       style={{
+        fontFamily: "var(--kn-font-sans)",
         fontSize: "var(--kn-text-caption)",
         fontStyle: "italic",
         color: "var(--kn-muted)",
@@ -105,11 +108,12 @@ export function Tag({ variant = "default", children, style, ...p }: TagProps) {
   const colors: Record<string, React.CSSProperties> = {
     goal: { background: "color-mix(in srgb, var(--kn-success) 18%, transparent)", color: "var(--kn-success)" },
     guard: { background: "color-mix(in srgb, var(--kn-warning) 20%, transparent)", color: "var(--kn-warning)" },
-    default: { background: "var(--kn-card)", color: "var(--kn-muted)" },
+    default: { background: "var(--kn-card)", color: "var(--kn-muted)", border: "1px solid var(--kn-border-strong)" },
   }
   return (
     <span
       style={{
+        fontFamily: "var(--kn-font-sans)",
         display: "inline-block",
         fontSize: "0.7rem",
         fontWeight: 700,
@@ -128,15 +132,10 @@ export function Tag({ variant = "default", children, style, ...p }: TagProps) {
 }
 
 /* inline emphasis roles */
-export const Pop = (p: React.HTMLAttributes<HTMLSpanElement>) => (
-  <span style={{ color: "var(--kn-success)", fontWeight: 700, ...p.style }} {...p} />
+const role = (color: string, extra?: React.CSSProperties) => (p: React.HTMLAttributes<HTMLSpanElement>) => (
+  <span style={{ fontFamily: "var(--kn-font-sans)", color, ...extra, ...p.style }} {...p} />
 )
-export const Dim = (p: React.HTMLAttributes<HTMLSpanElement>) => (
-  <span style={{ color: "var(--kn-muted)", ...p.style }} {...p} />
-)
-export const Warn = (p: React.HTMLAttributes<HTMLSpanElement>) => (
-  <span style={{ color: "var(--kn-warning)", ...p.style }} {...p} />
-)
-export const Bad = (p: React.HTMLAttributes<HTMLSpanElement>) => (
-  <span style={{ color: "var(--kn-danger)", ...p.style }} {...p} />
-)
+export const Pop = role("var(--kn-success)", { fontWeight: 700 })
+export const Dim = role("var(--kn-muted)")
+export const Warn = role("var(--kn-warning)")
+export const Bad = role("var(--kn-danger)")

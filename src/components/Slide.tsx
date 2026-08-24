@@ -51,7 +51,7 @@ export function Slide({
             style={{
               position: "absolute",
               inset: 0,
-              backgroundImage: `url(${image})`,
+              backgroundImage: `url("${image}")`,
               backgroundSize: "cover",
               backgroundPosition: imagePosition,
               zIndex: 0,
