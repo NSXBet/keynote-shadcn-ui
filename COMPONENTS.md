@@ -2,7 +2,7 @@
 
 Every component: typed API, one-line purpose, the Storybook story that demos it.
 
-**Hosted Storybook:** `https://upgraded-adventure-8gvj2vz.pages.github.io/?path=/story/<story-id>` (deployed from `main` via GitHub Pages). Locally: `npm run dev` then `http://localhost:6006/?path=/story/<story-id>`. Toggle brand ↔ cinematic with the toolbar paintbrush.
+**Hosted Storybook:** `https://nsxbet.github.io/keynote-shadcn-ui/?path=/story/<story-id>` (deployed from `main` via GitHub Pages). Locally: `npm run dev` then `http://localhost:6006/?path=/story/<story-id>`. Toggle brand ↔ cinematic with the toolbar paintbrush.
 
 ## Core
 

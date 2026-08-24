@@ -2,7 +2,7 @@
 
 A themable design system for **keynote presentations** — React components for slides, heroes, charts, tables, diagrams, and deck chrome. Charts use [Recharts](https://recharts.org/) with the [shadcn/ui chart pattern](https://ui.shadcn.com/docs/components/chart) (a `ChartConfig` maps series → label + color; colors come from CSS tokens, so charts re-theme with the deck).
 
-**[Live Storybook (component docs + both themes)](https://upgraded-adventure-8gvj2vz.pages.github.io/)** · [Component reference](COMPONENTS.md)
+**[Live Storybook (component docs + both themes)](https://nsxbet.github.io/keynote-shadcn-ui/)** · [Component reference](COMPONENTS.md)
 
 ## Install
 
