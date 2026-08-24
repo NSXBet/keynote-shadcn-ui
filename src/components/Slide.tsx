@@ -20,7 +20,7 @@ export function Slide({
   hero = false,
   image,
   imagePosition = "center",
-  scrimOpacity = 0.72,
+  scrimOpacity = 0.55,
   className = "",
   style,
   children,
@@ -31,10 +31,10 @@ export function Slide({
     display: "flex",
     flexDirection: "column",
     justifyContent: hero ? "center" : "flex-start",
-    alignItems: hero ? "center" : "stretch",
-    textAlign: hero ? "center" : "left",
-    padding: hero ? "6rem" : "4.5rem 5rem",
-    minHeight: "100%",
+    alignItems: hero ? "flex-start" : "stretch",
+    textAlign: hero ? "left" : "left",
+    padding: hero ? "6rem 7rem" : "4.5rem 5rem",
+    minHeight: hero ? "100vh" : "100%",
     background: "var(--kn-background)",
     color: "var(--kn-foreground)",
     fontFamily: "var(--kn-font-sans)",
@@ -62,7 +62,7 @@ export function Slide({
             style={{
               position: "absolute",
               inset: 0,
-              background: `radial-gradient(ellipse 55% 45% at 50% 50%, rgba(13,17,23,${scrimOpacity}), rgba(13,17,23,${scrimOpacity * 0.25}) 78%)`,
+              background: `linear-gradient(90deg, rgba(10,14,22,${scrimOpacity}) 0%, rgba(10,14,22,${scrimOpacity * 0.55}) 45%, rgba(10,14,22,${scrimOpacity * 0.1}) 80%), radial-gradient(ellipse 70% 60% at 40% 55%, rgba(10,14,22,${scrimOpacity * 0.4}), transparent 75%)`,
               zIndex: 1,
             }}
           />

@@ -160,19 +160,27 @@ export function Timeline({ items }: { items: TimelineItem[] }) {
 /* ---------- Cycle: circular loop (n stages around a ring) ---------- */
 export function Cycle({ steps, centerLabel }: { steps: React.ReactNode[]; centerLabel?: React.ReactNode }) {
   const n = steps.length
-  const size = 320
+  const size = 340
   const r = size / 2
+  const ring = r - 46
   return (
     <div className="kn-cycle" style={{ position: "relative", width: size, height: size, margin: "0 auto" }}>
       <svg width={size} height={size} style={{ position: "absolute", inset: 0 }}>
+        <defs>
+          <marker id="kn-cycle-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--kn-muted)" />
+          </marker>
+        </defs>
         <circle
           cx={r}
           cy={r}
-          r={r - 40}
+          r={ring}
           fill="none"
-          stroke="var(--kn-border)"
-          strokeWidth="2"
-          strokeDasharray="4 4"
+          stroke="var(--kn-border-strong)"
+          strokeWidth="1.5"
+          markerEnd="url(#kn-cycle-arrow)"
+          strokeDasharray={`${(2 * Math.PI * ring) / n - 14} 14`}
+          transform={`rotate(${-90 + 360 / (2 * n)} ${r} ${r})`}
         />
       </svg>
       {centerLabel != null && (
@@ -193,8 +201,8 @@ export function Cycle({ steps, centerLabel }: { steps: React.ReactNode[]; center
       )}
       {steps.map((s, i) => {
         const a = (i / n) * 2 * Math.PI - Math.PI / 2
-        const x = r + (r - 40) * Math.cos(a)
-        const y = r + (r - 40) * Math.sin(a)
+        const x = r + ring * Math.cos(a)
+        const y = r + ring * Math.sin(a)
         return (
           <div
             key={i}

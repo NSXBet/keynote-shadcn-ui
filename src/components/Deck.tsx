@@ -57,7 +57,7 @@ export function Deck({ children, initial = 0, pager = true, progress = true, ove
   }
 
   return (
-    <div className="kn-deck" style={{ position: "relative", width: "100%", height: "100%" }}>
+    <div className="kn-deck" style={{ position: "relative", width: "100%", height: "100vh" }}>
       {progress && (
         <div
           aria-hidden
@@ -81,7 +81,7 @@ export function Deck({ children, initial = 0, pager = true, progress = true, ove
           />
         </div>
       )}
-      <div style={{ width: "100%", height: "100%" }}>{slides[index]}</div>
+      <div style={{ width: "100%", height: "100%", minHeight: "100vh" }}>{slides[index]}</div>
       {overview && outline && (
         <div
           role="dialog"
@@ -133,14 +133,27 @@ export function Deck({ children, initial = 0, pager = true, progress = true, ove
                 aria-hidden
                 style={{
                   pointerEvents: "none",
-                  transform: "scale(0.18)",
-                  transformOrigin: "top left",
-                  width: "555%",
-                  height: 120,
+                  position: "relative",
+                  width: "100%",
+                  aspectRatio: "16 / 10",
                   overflow: "hidden",
+                  borderRadius: "var(--kn-radius-sm)",
+                  background: "var(--kn-background)",
                 }}
               >
-                {slide}
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "1280px",
+                    height: "800px",
+                    transform: "scale(0.16)",
+                    transformOrigin: "top left",
+                  }}
+                >
+                  {slide}
+                </div>
               </div>
             </button>
           ))}

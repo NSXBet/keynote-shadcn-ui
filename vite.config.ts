@@ -25,5 +25,6 @@ export default defineConfig(({ command }) => ({
     environment: "jsdom",
     globals: true,
     setupFiles: "./src/test/setup.ts",
+    exclude: ["**/node_modules/**", "vrt/**"],
   },
 }))

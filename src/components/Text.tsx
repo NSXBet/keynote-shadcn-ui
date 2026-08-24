@@ -27,10 +27,11 @@ export function Title({ children, style, ...p }: React.HTMLAttributes<HTMLHeadin
   return (
     <h1
       style={{
-        fontSize: "clamp(3rem,6vw,5.5rem)",
-        lineHeight: 0.98,
-        fontWeight: 850,
-        letterSpacing: "-0.045em",
+        fontFamily: "var(--kn-font-display)",
+        fontSize: "var(--kn-text-display)",
+        lineHeight: 0.96,
+        fontWeight: 800,
+        letterSpacing: "-0.03em",
         color: "var(--kn-foreground)",
         fontStyle: "normal",
         margin: 0,
@@ -47,10 +48,11 @@ export function Subtitle({ children, style, ...p }: React.HTMLAttributes<HTMLHea
   return (
     <h2
       style={{
-        fontSize: "clamp(2rem,3.4vw,3.2rem)",
-        lineHeight: 1.05,
-        fontWeight: 780,
-        letterSpacing: "-0.035em",
+        fontFamily: "var(--kn-font-display)",
+        fontSize: "var(--kn-text-title)",
+        lineHeight: 1.04,
+        fontWeight: 760,
+        letterSpacing: "-0.025em",
         color: "var(--kn-foreground)",
         fontStyle: "normal",
         margin: 0,
@@ -67,7 +69,7 @@ export function Body({ children, style, ...p }: React.HTMLAttributes<HTMLParagra
   return (
     <p
       style={{
-        fontSize: "clamp(1.15rem,1.7vw,1.5rem)",
+        fontSize: "var(--kn-text-body)",
         lineHeight: 1.45,
         color: "var(--kn-foreground)",
         ...style,
@@ -83,7 +85,7 @@ export function Caption({ children, style, ...p }: React.HTMLAttributes<HTMLPara
   return (
     <p
       style={{
-        fontSize: "0.95rem",
+        fontSize: "var(--kn-text-caption)",
         fontStyle: "italic",
         color: "var(--kn-muted)",
         ...style,
