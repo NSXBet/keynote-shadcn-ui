@@ -85,19 +85,26 @@ export function Process({ steps, vertical = false }: { steps: ProcessStep[]; ver
     >
       {steps.map((s, i) => {
         const tone = s.state === "done" ? "success" : s.state === "current" ? "accent" : "default"
+        const ring =
+          tone === "success"
+            ? { border: "2px solid var(--kn-success)", color: "var(--kn-success)", background: "transparent" }
+            : tone === "accent"
+              ? { border: "2px solid var(--kn-accent)", color: "var(--kn-accent)", background: "transparent" }
+              : { border: "2px solid var(--kn-border-strong)", color: "var(--kn-muted)", background: "transparent" }
         return (
           <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem", flex: vertical ? undefined : "1 1 0" }}>
             <span
               style={{
-                ...box(tone),
+                ...ring,
                 borderRadius: "999px",
                 width: "1.9em",
                 height: "1.9em",
-                padding: 0,
                 display: "inline-flex",
                 alignItems: "center",
                 justifyContent: "center",
                 flex: "0 0 auto",
+                fontWeight: 700,
+                fontVariantNumeric: "tabular-nums",
               }}
             >
               {s.state === "done" ? "✓" : i + 1}

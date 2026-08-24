@@ -108,8 +108,9 @@ export function ChartLegend({ config, keys }: { config: ChartConfig; keys: strin
 }
 
 export const axisStyle = {
-  stroke: resolveColor("var(--kn-chart-label)"),
+  stroke: resolveColor("var(--kn-muted)"),
   fontSize: 12,
+  fontWeight: 500,
 } as const
 export const gridStyle = {
   stroke: resolveColor("var(--kn-chart-grid)"),

@@ -53,9 +53,9 @@ export function SectionDivider({
   return (
     <Slide hero image={image}>
       {kicker != null && <Kicker>{kicker}</Kicker>}
-      <Title style={{ maxWidth: "16ch", marginLeft: "auto", marginRight: "auto" }}>{title}</Title>
+      <Title style={{ maxWidth: "16ch" }}>{title}</Title>
       {subtitle != null && (
-        <p style={{ fontSize: "clamp(1.2rem,2vw,1.7rem)", color: "var(--kn-muted)", maxWidth: "44ch", margin: "1rem auto 0" }}>
+        <p style={{ fontSize: "clamp(1.2rem,2vw,1.7rem)", color: "var(--kn-muted)", maxWidth: "44ch", margin: "1rem 0 0" }}>
           {subtitle}
         </p>
       )}
@@ -89,7 +89,7 @@ export function Stat({
             : "var(--kn-foreground)"
   return (
     <div className="kn-stat" style={{ textAlign: "center" }}>
-      <div style={{ fontSize: "clamp(2.6rem,6vw,4.5rem)", fontWeight: 800, letterSpacing: "-0.03em", color }}>{value}</div>
+      <div style={{ fontFamily: "var(--kn-font-display)", fontSize: "clamp(2.6rem,6vw,4.5rem)", fontWeight: 800, letterSpacing: "-0.03em", color }}>{value}</div>
       {label != null && <div style={{ color: "var(--kn-muted)", fontSize: "1rem", marginTop: "0.25rem" }}>{label}</div>}
     </div>
   )

@@ -126,7 +126,7 @@ export function RadialChart({
           }}
         >
           {centerValue && (
-            <span style={{ fontSize: "2rem", fontWeight: 800, color: "var(--kn-foreground)", letterSpacing: "-0.02em" }}>
+            <span style={{ fontSize: "2rem", fontWeight: 800, fontStyle: "normal", color: "var(--kn-foreground)", letterSpacing: "-0.02em", fontVariantNumeric: "tabular-nums" }}>
               {centerValue}
             </span>
           )}

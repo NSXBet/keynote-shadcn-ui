@@ -96,7 +96,7 @@ export function Deck({ children, initial = 0, pager = true, progress = true, ove
             display: "grid",
             gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
             gap: 14,
-            alignContent: "start",
+            alignContent: "center",
           }}
         >
           {slides.map((slide, i) => (
@@ -109,7 +109,7 @@ export function Deck({ children, initial = 0, pager = true, progress = true, ove
                 textAlign: "left",
                 cursor: "pointer",
                 background: "var(--kn-card)",
-                border: `1px solid ${i === index ? "var(--kn-accent)" : "var(--kn-border)"}`,
+                border: `1px solid ${i === index ? "var(--kn-accent)" : "var(--kn-border-strong)"}`,
                 borderRadius: "var(--kn-radius)",
                 padding: "0.6rem",
                 overflow: "hidden",

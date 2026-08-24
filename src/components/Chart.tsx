@@ -42,7 +42,7 @@ export interface DonutChartProps {
 export function DonutChart({
   slices,
   config,
-  size = 250,
+  size = 300,
   centerValue,
   centerLabel,
   innerRadius = 0.6,

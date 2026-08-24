@@ -76,8 +76,11 @@
 }
 
 /* base typography — applies once a theme stylesheet is loaded */
-.kn-slide, .kn-deck {
+.kn-slide, .kn-deck, .kn-stat, .kn-chart, .kn-flow, .kn-decision, .kn-process,
+.kn-timeline, .kn-cycle, .kn-comparison, .kn-funnel, .kn-quote, .kn-section,
+.kn-youtube {
   font-family: var(--kn-font-sans);
+  color: var(--kn-foreground);
 }
 .kn-stat, .kn-chart, .kn-slide .pager {
   font-variant-numeric: tabular-nums;
