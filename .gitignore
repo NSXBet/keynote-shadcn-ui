@@ -150,3 +150,6 @@ vite.config.ts.timestamp-*
 
 # Storybook static build
 storybook-static/
+
+# VRT results (snapshots are committed)
+vrt/results/

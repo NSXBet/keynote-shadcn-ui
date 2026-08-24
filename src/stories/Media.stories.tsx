@@ -23,7 +23,7 @@ export const ImageBase64: StoryObj = {
 export const ImageUrl: StoryObj = {
   render: () => (
     <div style={{ padding: "2rem", background: "var(--kn-background)" }}>
-      <Image src="https://picsum.photos/seed/keynote/640/360" alt="sample" maxWidth={480} />
+      <Image src={"data:image/svg+xml;utf8," + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360"><rect width="640" height="360" fill="#2563eb"/><text x="50%" y="50%" fill="#fff" font-size="28" text-anchor="middle" dy=".35em">sample image</text></svg>`)} alt="sample" maxWidth={480} />
     </div>
   ),
 }

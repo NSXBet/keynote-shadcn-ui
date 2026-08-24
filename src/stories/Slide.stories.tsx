@@ -26,7 +26,7 @@ export const Content: Story = {
 export const Hero: Story = {
   render: () => (
     <div style={{ height: "80vh" }}>
-      <Slide hero image="https://picsum.photos/seed/stadium/1600/900">
+      <Slide hero image={"data:image/svg+xml;utf8," + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1e3a8a"/><stop offset="1" stop-color="#0d1117"/></linearGradient></defs><rect width="1600" height="900" fill="url(#g)"/><circle cx="1200" cy="300" r="180" fill="#2fd6a3" opacity="0.35"/><circle cx="400" cy="650" r="120" fill="#5b8cff" opacity="0.3"/></svg>`)}>
         <Kicker>Section 1</Kicker>
         <Title>Experimentation at Flutter Brazil</Title>
         <Body style={{ color: "#dbe4f5", maxWidth: "42ch", marginTop: "1rem" }}>

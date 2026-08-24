@@ -30,6 +30,8 @@
     "dev": "storybook dev -p 6006",
     "build": "vite build && vite build --config vite.umd.config.ts && tsc -p tsconfig.build.json",
     "test": "vitest run",
+    "test:vrt": "playwright test",
+    "test:vrt:update": "playwright test --update-snapshots",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "prepublishOnly": "npm run build && npm test"
@@ -40,6 +42,7 @@
     "recharts": "^3.0.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.62.1",
     "@storybook/react-vite": "^10.5.8",
     "@tailwindcss/vite": "^4.3.3",
     "@testing-library/jest-dom": "^7.0.1",
@@ -48,6 +51,7 @@
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^6.0.5",
     "jsdom": "^29.1.1",
+    "playwright": "^1.62.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "recharts": "^3.10.1",
