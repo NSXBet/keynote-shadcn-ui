@@ -5,7 +5,10 @@ import * as React from "react"
 export function Table({ children, style, ...p }: React.HTMLAttributes<HTMLTableElement>) {
   return (
     <table
+      className="kn-table"
       style={{
+        fontFamily: "var(--kn-font-sans)",
+        fontVariantNumeric: "tabular-nums",
         borderCollapse: "collapse",
         width: "100%",
         fontSize: "1rem",
