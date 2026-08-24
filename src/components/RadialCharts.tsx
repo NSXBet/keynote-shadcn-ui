@@ -16,6 +16,7 @@ import {
   ChartLegend,
   seriesColor,
   axisStyle,
+  resolveColor,
 } from "./ChartCore"
 
 /* RadarChart — metric/skill polygons.
@@ -44,7 +45,7 @@ export function RadarChart({
     <div className="kn-chart" style={{ width: "100%" }}>
       <ResponsiveContainer width="100%" height={height}>
         <RRadarChart data={data} margin={{ top: 12, right: 24, bottom: 12, left: 24 }}>
-          <PolarGrid stroke="var(--kn-chart-grid)" />
+          <PolarGrid stroke={resolveColor("var(--kn-chart-grid)")} />
           <PolarAngleAxis dataKey={angleKey} tick={axisStyle} />
           <PolarRadiusAxis tick={false} axisLine={false} />
           <Tooltip content={<ChartTooltipContent />} />
@@ -108,7 +109,7 @@ export function RadialChart({
           endAngle={-270}
         >
           <PolarRadiusAxis domain={[0, max]} tick={false} axisLine={false} />
-          <RadialBar dataKey="value" cornerRadius={6} background={{ fill: "var(--kn-card)" }} />
+          <RadialBar dataKey="value" cornerRadius={6} background={{ fill: resolveColor("var(--kn-card)") }} />
           <Tooltip content={<ChartTooltipContent />} />
         </RRadialBarChart>
       </ResponsiveContainer>

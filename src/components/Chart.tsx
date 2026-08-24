@@ -6,6 +6,7 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts"
+import { resolveColor } from "./ChartCore"
 
 /* Chart — Recharts under the hood, following the shadcn/ui chart pattern:
  * a ChartConfig maps series keys -> {label, color}; colors come from
@@ -49,7 +50,7 @@ export function DonutChart({
   const data = slices.map((s) => ({
     name: config[s.key]?.label ?? s.key,
     value: s.value,
-    fill: config[s.key]?.color ?? "var(--kn-chart-1)",
+    fill: resolveColor(config[s.key]?.color ?? "var(--kn-chart-1)"),
   }))
   return (
     <div className="kn-chart" style={{ width: "100%", maxWidth: size }}>
@@ -86,7 +87,7 @@ export function DonutChart({
             nameKey="name"
             innerRadius={`${innerRadius * 100}%`}
             outerRadius="92%"
-            stroke="var(--kn-background)"
+            stroke={resolveColor("var(--kn-background)")}
             strokeWidth={5}
           >
             {(centerValue || centerLabel) && (

@@ -11,8 +11,28 @@ export interface ChartConfigEntry {
 }
 export type ChartConfig = Record<string, ChartConfigEntry>
 
+const varCache = new Map<string, string>()
+
+/* Recharts writes fill/stroke as SVG *attributes*, which do NOT resolve CSS
+ * var() (only CSS properties do). Resolve a `var(--kn-*)` token to its
+ * computed value so SVG attributes get a real color. Non-var colors pass
+ * through unchanged. */
+export function resolveColor(color: string): string {
+  if (!color.startsWith("var(")) return color
+  const cached = varCache.get(color)
+  if (cached) return cached
+  const name = color.slice(4, -1).trim()
+  let resolved = color
+  if (typeof window !== "undefined") {
+    const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim()
+    if (v) resolved = v
+  }
+  varCache.set(color, resolved)
+  return resolved
+}
+
 export function seriesColor(config: ChartConfig, key: string, index: number): string {
-  return config[key]?.color ?? `var(--kn-chart-${(index % 8) + 1})`
+  return resolveColor(config[key]?.color ?? `var(--kn-chart-${(index % 8) + 1})`)
 }
 
 export function ChartTooltipContent({
@@ -88,10 +108,10 @@ export function ChartLegend({ config, keys }: { config: ChartConfig; keys: strin
 }
 
 export const axisStyle = {
-  stroke: "var(--kn-chart-label)",
+  stroke: resolveColor("var(--kn-chart-label)"),
   fontSize: 12,
 } as const
 export const gridStyle = {
-  stroke: "var(--kn-chart-grid)",
+  stroke: resolveColor("var(--kn-chart-grid)"),
   strokeDasharray: "3 3",
 } as const

@@ -19,6 +19,7 @@ import {
   seriesColor,
   axisStyle,
   gridStyle,
+  resolveColor,
 } from "./ChartCore"
 
 /* Categorical charts (Bar / Line / Area) — one data shape:
@@ -61,7 +62,7 @@ export function BarChart({
           {showGrid && <CartesianGrid vertical={false} {...gridStyle} />}
           <XAxis dataKey={xKey} tickLine={false} axisLine={false} tickMargin={8} tick={axisStyle} />
           <YAxis tickLine={false} axisLine={false} tick={axisStyle} width={36} />
-          <Tooltip cursor={{ fill: "color-mix(in srgb, var(--kn-border) 30%, transparent)" }} content={<ChartTooltipContent />} />
+          <Tooltip cursor={{ fill: resolveColor("var(--kn-border)") }} content={<ChartTooltipContent />} />
           {keys.map((key, i) => (
             <Bar
               key={key}
