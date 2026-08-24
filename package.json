@@ -1,0 +1,63 @@
+{
+  "name": "keynote-shadcn-ui",
+  "private": false,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "A themable design system for keynote presentations — Slide, Hero, Chart, Table, Diagram, Text, Image, Video components. Recharts + shadcn chart patterns.",
+  "license": "MIT",
+  "main": "./dist/keynote-shadcn-ui.umd.js",
+  "module": "./dist/keynote-shadcn-ui.esm.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/keynote-shadcn-ui.esm.js",
+      "require": "./dist/keynote-shadcn-ui.umd.js"
+    },
+    "./themes/brand.css": "./src/themes/brand.css",
+    "./themes/cinematic.css": "./src/themes/cinematic.css",
+    "./themes/tokens.css": "./src/themes/tokens.css"
+  },
+  "files": [
+    "dist",
+    "src/themes",
+    "COMPONENTS.md"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "scripts": {
+    "dev": "storybook dev -p 6006",
+    "build": "vite build && vite build --config vite.umd.config.ts && tsc -p tsconfig.build.json",
+    "test": "vitest run",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0",
+    "recharts": "^3.0.0"
+  },
+  "devDependencies": {
+    "@storybook/react-vite": "^10.5.8",
+    "@tailwindcss/vite": "^4.3.3",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^6.0.5",
+    "jsdom": "^29.1.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "recharts": "^3.10.1",
+    "storybook": "^10.5.8",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^7.0.2",
+    "vite": "^8.2.1",
+    "vitest": "^4.1.10"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

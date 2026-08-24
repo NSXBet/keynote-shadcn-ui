@@ -1,0 +1,175 @@
+import * as React from "react"
+
+/* Deck — the chrome that turns a list of slides into a navigable keynote.
+ * Keyboard nav (←/→, Home/End), N/M pager, top progress hairline, and an
+ * ESC-triggered outline grid of all slides for quick navigation. */
+
+export interface DeckProps {
+  children: React.ReactNode[]
+  /** start index (default 0) */
+  initial?: number
+  /** show the N/M pager (default true) */
+  pager?: boolean
+  /** show the top progress hairline (default true) */
+  progress?: boolean
+  /** ESC opens an outline grid of all slides (default true) */
+  overview?: boolean
+  /** called when the active slide changes */
+  onSlide?: (index: number) => void
+}
+
+export function Deck({ children, initial = 0, pager = true, progress = true, overview = true, onSlide }: DeckProps) {
+  const slides = React.Children.toArray(children)
+  const count = slides.length
+  const [index, setIndex] = React.useState(Math.min(Math.max(initial, 0), count - 1))
+  const [outline, setOutline] = React.useState(false)
+
+  const go = React.useCallback(
+    (next: number) => {
+      setIndex((cur) => {
+        const clamped = Math.min(Math.max(next, 0), count - 1)
+        if (clamped !== cur) onSlide?.(clamped)
+        return clamped
+      })
+    },
+    [count, onSlide]
+  )
+
+  React.useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && overview) {
+        setOutline((o) => !o)
+        return
+      }
+      if (outline) return
+      if (e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") go(index + 1)
+      else if (e.key === "ArrowLeft" || e.key === "PageUp") go(index - 1)
+      else if (e.key === "Home") go(0)
+      else if (e.key === "End") go(count - 1)
+    }
+    window.addEventListener("keydown", onKey)
+    return () => window.removeEventListener("keydown", onKey)
+  }, [index, count, go, outline, overview])
+
+  const jump = (i: number) => {
+    go(i)
+    setOutline(false)
+  }
+
+  return (
+    <div className="kn-deck" style={{ position: "relative", width: "100%", height: "100%" }}>
+      {progress && (
+        <div
+          aria-hidden
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            height: 3,
+            background: "color-mix(in srgb, var(--kn-foreground) 10%, transparent)",
+            zIndex: 30,
+          }}
+        >
+          <div
+            style={{
+              height: "100%",
+              width: `${((index + 1) / count) * 100}%`,
+              background: "var(--kn-success)",
+              transition: "width .25s ease-out",
+            }}
+          />
+        </div>
+      )}
+      <div style={{ width: "100%", height: "100%" }}>{slides[index]}</div>
+      {overview && outline && (
+        <div
+          role="dialog"
+          aria-label="Slide outline"
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 40,
+            background: "var(--kn-background)",
+            overflow: "auto",
+            padding: "4vh 4vw",
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
+            gap: 14,
+            alignContent: "start",
+          }}
+        >
+          {slides.map((slide, i) => (
+            <button
+              key={i}
+              onClick={() => jump(i)}
+              aria-label={`Go to slide ${i + 1}`}
+              aria-current={i === index}
+              style={{
+                textAlign: "left",
+                cursor: "pointer",
+                background: "var(--kn-card)",
+                border: `1px solid ${i === index ? "var(--kn-accent)" : "var(--kn-border)"}`,
+                borderRadius: "var(--kn-radius)",
+                padding: "0.6rem",
+                overflow: "hidden",
+                position: "relative",
+                fontFamily: "var(--kn-font-sans)",
+              }}
+            >
+              <span
+                style={{
+                  position: "absolute",
+                  top: "0.4rem",
+                  right: "0.5rem",
+                  fontSize: "0.7rem",
+                  color: "var(--kn-muted)",
+                  fontVariantNumeric: "tabular-nums",
+                }}
+              >
+                {i + 1}
+              </span>
+              <div
+                aria-hidden
+                style={{
+                  pointerEvents: "none",
+                  transform: "scale(0.18)",
+                  transformOrigin: "top left",
+                  width: "555%",
+                  height: 120,
+                  overflow: "hidden",
+                }}
+              >
+                {slide}
+              </div>
+            </button>
+          ))}
+        </div>
+      )}
+      {pager && (
+        <button
+          onClick={() => go(index + 1)}
+          aria-label={`Slide ${index + 1} of ${count}. Next slide.`}
+          style={{
+            position: "fixed",
+            bottom: "1rem",
+            right: "1.25rem",
+            zIndex: 30,
+            color: "var(--kn-muted)",
+            fontSize: "0.8rem",
+            fontVariantNumeric: "tabular-nums",
+            background: "transparent",
+            border: "1px solid var(--kn-border)",
+            borderRadius: 8,
+            padding: "0.35rem 0.6rem",
+            cursor: "pointer",
+            fontFamily: "var(--kn-font-sans)",
+          }}
+        >
+          {index + 1} / {count}
+          {index < count - 1 ? " →" : ""}
+        </button>
+      )}
+    </div>
+  )
+}

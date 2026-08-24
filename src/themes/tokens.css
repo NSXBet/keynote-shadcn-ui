@@ -1,0 +1,65 @@
+/* keynote-shadcn-ui · design tokens
+ * All color/spacing/type flow through CSS custom properties so a deck can
+ * switch themes by importing a different theme stylesheet.
+ * Pattern follows shadcn/ui theming (var-driven, dark via .dark or theme class).
+ */
+
+:root {
+  /* brand (default): white + blue */
+  --kn-background: #ffffff;
+  --kn-foreground: #0f172a;
+  --kn-muted: #64748b;
+  --kn-card: #f8fafc;
+  --kn-border: #e2e8f0;
+
+  --kn-primary: #2563eb; /* blue-600 */
+  --kn-primary-foreground: #ffffff;
+  --kn-accent: #2563eb;
+  --kn-success: #16a34a;
+  --kn-warning: #d97706;
+  --kn-danger: #dc2626;
+
+  /* shadcn chart palette (light) — used by Chart via ChartConfig */
+  --kn-chart-1: oklch(0.646 0.222 41.116);
+  --kn-chart-2: oklch(0.6 0.118 184.704);
+  --kn-chart-3: oklch(0.398 0.07 227.392);
+  --kn-chart-4: oklch(0.828 0.189 84.429);
+  --kn-chart-5: oklch(0.769 0.188 70.08);
+  --kn-chart-6: oklch(0.58 0.2 300);
+  --kn-chart-7: oklch(0.68 0.15 160);
+  --kn-chart-8: oklch(0.72 0.19 20);
+  /* chart scaffolding (grid / axis / tick labels) */
+  --kn-chart-grid: var(--kn-border);
+  --kn-chart-axis: var(--kn-border);
+  --kn-chart-label: var(--kn-muted);
+
+  --kn-radius: 0.75rem;
+  --kn-font-sans: Inter, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --kn-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.kn-cinematic,
+.dark {
+  /* cinematic: dark editorial (matches experimentation deck) */
+  --kn-background: #0d1117;
+  --kn-foreground: #e8ecf4;
+  --kn-muted: #9aa7bd;
+  --kn-card: rgba(26, 34, 51, 0.88);
+  --kn-border: #2a3550;
+
+  --kn-primary: #5b8cff;
+  --kn-primary-foreground: #ffffff;
+  --kn-accent: #5b8cff;
+  --kn-success: #2fd6a3;
+  --kn-warning: #ffc978;
+  --kn-danger: #ff8a8a;
+
+  --kn-chart-1: oklch(0.488 0.243 264.376);
+  --kn-chart-2: oklch(0.696 0.17 162.48);
+  --kn-chart-3: oklch(0.769 0.188 70.08);
+  --kn-chart-4: oklch(0.627 0.265 303.9);
+  --kn-chart-5: oklch(0.645 0.246 16.439);
+  --kn-chart-6: oklch(0.65 0.2 320);
+  --kn-chart-7: oklch(0.72 0.15 150);
+  --kn-chart-8: oklch(0.75 0.16 40);
+}

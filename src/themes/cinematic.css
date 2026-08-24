@@ -1,0 +1,11 @@
+/* cinematic theme: dark editorial */
+@import "./tokens.css";
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--kn-background);
+  color: var(--kn-foreground);
+}
