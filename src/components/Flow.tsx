@@ -20,10 +20,10 @@ const toneColor: Record<NonNullable<FlowStep["tone"]>, string | undefined> = {
 function FlowArrow({ arrow }: { arrow: React.ReactNode }) {
   if (typeof arrow === "string" && arrow === "→") {
     return (
-      <svg width={30} height={18} viewBox="0 0 30 18" aria-hidden style={{ display: "block", flex: "0 0 auto" }}>
-        {/* shaft + filled triangular head = reads as an arrow at deck scale */}
-        <line x1="2" y1="9" x2="20" y2="9" stroke="var(--kn-muted)" strokeWidth="2.2" strokeLinecap="round" />
-        <path d="M 19 3.5 L 28 9 L 19 14.5 Z" fill="var(--kn-muted)" />
+      <svg width={34} height={18} viewBox="0 0 34 18" aria-hidden style={{ display: "block", flex: "0 0 auto" }}>
+        {/* bold shaft + large filled triangular head = unambiguous arrow */}
+        <line x1="2" y1="9" x2="21" y2="9" stroke="var(--kn-muted)" strokeWidth="2.6" strokeLinecap="round" />
+        <path d="M 19 2.5 L 32 9 L 19 15.5 Z" fill="var(--kn-muted)" />
       </svg>
     )
   }

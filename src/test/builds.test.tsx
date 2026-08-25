@@ -55,7 +55,20 @@ describe("Deck build cursor", () => {
     fireEvent.keyDown(window, { key: "ArrowRight" }) // frag2
     fireEvent.keyDown(window, { key: "ArrowRight" }) // advance to slide2
     expect(screen.getByText("slide2")).toBeInTheDocument()
-    fireEvent.keyDown(window, { key: "ArrowLeft" }) // back to slide1, cursor at fragment count
+    fireEvent.keyDown(window, { key: "ArrowLeft" }) // back to slide1, all builds now shown
     expect(screen.getByText("slide1")).toBeInTheDocument()
+  })
+
+  it("going back to a prior slide shows all its builds (already seen)", () => {
+    render(<DeckWith />)
+    fireEvent.keyDown(window, { key: "ArrowRight" })
+    fireEvent.keyDown(window, { key: "ArrowRight" })
+    fireEvent.keyDown(window, { key: "ArrowRight" })
+    fireEvent.keyDown(window, { key: "ArrowLeft" })
+    // ArrowLeft → back to slide1, restore effect shows all its builds
+    expect(screen.getByText("slide1")).toBeInTheDocument()
+    const frags = document.querySelectorAll(".kn-fragment")
+    const visible = [...frags].filter((f) => parseFloat(getComputedStyle(f).opacity) >= 0.5)
+    expect(visible.length).toBe(2)
   })
 })

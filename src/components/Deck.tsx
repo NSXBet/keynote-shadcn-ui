@@ -25,18 +25,29 @@ export function Deck({ children, initial = 0, pager = true, progress = true, ove
   const [index, setIndex] = React.useState(Math.min(Math.max(initial, 0), count - 1))
   const [outline, setOutline] = React.useState(false)
   const [cursor, setCursor] = React.useState(0)
+  const [pendingCursor, setPendingCursor] = React.useState<number | null>(null)
   const fragCounts = React.useMemo(() => slides.map((s) => countFragments(s)), [slides])
 
+  // apply a pending cursor set after an index change, so back-navigation
+  // restoring builds isn't overridden by go()'s own reset.
+  React.useEffect(() => {
+    if (pendingCursor !== null) {
+      setCursor(pendingCursor)
+      setPendingCursor(null)
+    }
+  }, [index, pendingCursor])
+
   const go = React.useCallback(
-    (next: number) => {
+    (next: number, cursorOverride?: number) => {
       setIndex((cur) => {
         const clamped = Math.min(Math.max(next, 0), count - 1)
         if (clamped !== cur) {
           onSlide?.(clamped)
-          setCursor(0)
+          if (cursorOverride === undefined) setCursor(0)
         }
         return clamped
       })
+      if (cursorOverride !== undefined) setPendingCursor(cursorOverride)
     },
     [count, onSlide]
   )
@@ -50,8 +61,12 @@ export function Deck({ children, initial = 0, pager = true, progress = true, ove
 
   const prev = React.useCallback(() => {
     if (cursor > 0) setCursor((c) => c - 1)
-    else go(index - 1)
-  }, [cursor, index, go])
+    else {
+      const target = index - 1
+      // re-visiting a prior slide restores all its builds (you already saw them)
+      go(target, fragCounts[target] ?? 0)
+    }
+  }, [cursor, index, go, fragCounts])
 
   React.useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
