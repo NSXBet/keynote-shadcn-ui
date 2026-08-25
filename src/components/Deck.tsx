@@ -22,7 +22,28 @@ export interface DeckProps {
 export function Deck({ children, initial = 0, pager = true, progress = true, overview = true, onSlide }: DeckProps) {
   const slides = React.Children.toArray(children)
   const count = slides.length
-  const [index, setIndex] = React.useState(Math.min(Math.max(initial, 0), count - 1))
+  // read initial index from URL hash (#3 = slide 3), so reload restores position
+  const [index, setIndex] = React.useState(() => {
+    if (typeof window === "undefined") return initial
+    const m = window.location.hash.match(/^#\/?(\d+)$/)
+    if (!m) return initial
+    return Math.min(Math.max(parseInt(m[1], 10) - 1, 0), count - 1)
+  })
+  const interacted = React.useRef(false)
+
+  // persist position to URL hash so reload/bookmark retains it (browser-only)
+  React.useEffect(() => {
+    if (!interacted.current) return
+    // skip in test environments (vitest sets NODE_ENV=test)
+    if (import.meta.env?.MODE === "test") return
+    if (typeof window === "undefined") return
+    try {
+      window.history?.replaceState?.(null, "", `#/${index + 1}`)
+    } catch {
+      /* ignore */
+    }
+  }, [index])
+
   const [outline, setOutline] = React.useState(false)
   const [cursor, setCursor] = React.useState(0)
   const [pendingCursor, setPendingCursor] = React.useState<number | null>(null)
@@ -39,6 +60,7 @@ export function Deck({ children, initial = 0, pager = true, progress = true, ove
 
   const go = React.useCallback(
     (next: number, cursorOverride?: number) => {
+      interacted.current = true
       setIndex((cur) => {
         const clamped = Math.min(Math.max(next, 0), count - 1)
         if (clamped !== cur) {
