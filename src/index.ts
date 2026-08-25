@@ -67,6 +67,8 @@ export { Fragment, BuildScope, countFragments } from "./components/Fragment"
 export type { FragmentProps, FragmentAnimation, BuildState } from "./components/Fragment"
 export { SlideTransitionView } from "./components/SlideTransition"
 export type { SlideTransitionProps, SlideTransition } from "./components/SlideTransition"
+export { Connector } from "./components/Connector"
+export type { ConnectorProps, ConnectorDirection, ConnectorCurve } from "./components/Connector"
 export { MaskedImage } from "./components/MaskedImage"
 export type { MaskedImageProps, MaskShape } from "./components/MaskedImage"
 export {

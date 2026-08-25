@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { Deck, Slide, Subtitle, Body, Fragment, SlideTransitionView } from "../index"
+import { Deck, Slide, Subtitle, Body, Fragment, SlideTransitionView, Connector } from "../index"
 
 const meta: Meta = { title: "Keynote/Transitions & Builds" }
 export default meta
@@ -34,6 +34,25 @@ export const BuildsStepwise: StoryObj = {
           <Body>Advances straight.</Body>
         </Slide>
       </Deck>
+    </div>
+  ),
+}
+
+export const Connectors: StoryObj = {
+  render: () => (
+    <div style={{ padding: "2rem", display: "flex", flexDirection: "column", gap: "1.5rem", background: "var(--kn-background)" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+        <Connector direction="right" />
+        <Connector direction="right" curve="curve" />
+        <Connector direction="down" />
+        <Connector direction="left" />
+        <Connector direction="up" />
+      </div>
+      <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+        <Connector direction="right" color="var(--kn-accent)" />
+        <Connector direction="right" color="var(--kn-success)" thickness={3} />
+        <Connector direction="right" color="var(--kn-danger)" length={50} />
+      </div>
     </div>
   ),
 }

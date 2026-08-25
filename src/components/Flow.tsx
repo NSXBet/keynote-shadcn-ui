@@ -1,4 +1,5 @@
 import * as React from "react"
+import { Connector } from "./Connector"
 
 /* Flow — a horizontal chain of boxed steps joined by arrows.
  * Built for keynote journey / decision-tree / equation diagrams.
@@ -19,13 +20,7 @@ const toneColor: Record<NonNullable<FlowStep["tone"]>, string | undefined> = {
 
 function FlowArrow({ arrow }: { arrow: React.ReactNode }) {
   if (typeof arrow === "string" && arrow === "→") {
-    return (
-      <svg width={34} height={18} viewBox="0 0 34 18" aria-hidden style={{ display: "block", flex: "0 0 auto" }}>
-        {/* bold shaft + large filled triangular head = unambiguous arrow */}
-        <line x1="2" y1="9" x2="21" y2="9" stroke="var(--kn-muted)" strokeWidth="2.6" strokeLinecap="round" />
-        <path d="M 19 2.5 L 32 9 L 19 15.5 Z" fill="var(--kn-muted)" />
-      </svg>
-    )
+    return <Connector direction="right" thickness={2.6} />
   }
   return (
     <span aria-hidden style={{ color: "var(--kn-muted)", fontSize: "1.3rem", fontWeight: 300, userSelect: "none" }}>

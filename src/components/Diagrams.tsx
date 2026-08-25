@@ -1,4 +1,5 @@
 import * as React from "react"
+import { Connector } from "./Connector"
 
 /* Presentation diagrams — custom, token-driven. No shadcn analogs.
  * All share the same box/arrow language as Flow. */
@@ -32,16 +33,10 @@ export interface DecisionBranch {
   outcome?: React.ReactNode
 }
 
-function Arrow({ label, color = "var(--kn-muted)", height = 26 }: { label?: string; color?: string; height?: number }) {
-  const w = 40
-  const cx = w / 2
+function Arrow({ label, height = 26 }: { label?: string; height?: number }) {
   return (
-    <div style={{ position: "relative", height, width: w, display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <svg width={w} height={height} style={{ display: "block" }}>
-        {/* clean downward arrow: shaft + filled triangular head */}
-        <line x1={cx} y1={1} x2={cx} y2={height - 8} stroke={color} strokeWidth="2.2" strokeLinecap="round" />
-        <path d={`M ${cx - 5} ${height - 9} L ${cx} ${height - 1} L ${cx + 5} ${height - 9} Z`} fill={color} />
-      </svg>
+    <div style={{ position: "relative", height, width: 40, display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <Connector direction="down" length={height} thickness={2.2} />
       {label != null && (
         <span
           style={{
