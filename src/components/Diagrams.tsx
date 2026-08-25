@@ -38,9 +38,9 @@ function Arrow({ label, color = "var(--kn-muted)", height = 26 }: { label?: stri
   return (
     <div style={{ position: "relative", height, width: w, display: "flex", alignItems: "center", justifyContent: "center" }}>
       <svg width={w} height={height} style={{ display: "block" }}>
-        {/* gentle S-curve with a soft downward pointer */}
-        <path d={`M ${cx} 0 C ${cx - 6} ${height * 0.3}, ${cx + 6} ${height * 0.6}, ${cx} ${height - 5}`} fill="none" stroke={color} strokeWidth="1.6" strokeLinecap="round" />
-        <path d={`M ${cx - 4.5} ${height - 10} L ${cx} ${height - 1.5} L ${cx + 4.5} ${height - 10}`} fill="none" stroke={color} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+        {/* clean downward arrow: shaft + filled triangular head */}
+        <line x1={cx} y1={1} x2={cx} y2={height - 8} stroke={color} strokeWidth="2.2" strokeLinecap="round" />
+        <path d={`M ${cx - 5} ${height - 9} L ${cx} ${height - 1} L ${cx + 5} ${height - 9} Z`} fill={color} />
       </svg>
       {label != null && (
         <span
@@ -87,16 +87,12 @@ export function DecisionTree({
                 d={`M ${fromX} 0 C ${fromX} 18, ${toX} 12, ${toX} 24`}
                 fill="none"
                 stroke="var(--kn-border-strong)"
-                strokeWidth="1.5"
+                strokeWidth="2.2"
               />
-              {/* soft pointer following the curve into the branch */}
+              {/* filled triangular head at the end of the curved edge */}
               <path
-                d={`M ${toX - 4.5} 19.5 L ${toX} 26.5 L ${toX + 4.5} 19.5`}
-                fill="none"
-                stroke="var(--kn-border-strong)"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+                d={`M ${toX - 4.5} 20 L ${toX} 26 L ${toX + 4.5} 20 Z`}
+                fill="var(--kn-border-strong)"
               />
               {branchArrowLabels?.[i] != null && (
                 <text

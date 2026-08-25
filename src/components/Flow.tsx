@@ -21,9 +21,9 @@ function FlowArrow({ arrow }: { arrow: React.ReactNode }) {
   if (typeof arrow === "string" && arrow === "→") {
     return (
       <svg width={30} height={18} viewBox="0 0 30 18" aria-hidden style={{ display: "block", flex: "0 0 auto" }}>
-        {/* gentle curve with a soft pointer */}
-        <path d="M 1 12 C 8 12, 16 9, 24 6" fill="none" stroke="var(--kn-muted)" strokeWidth="1.6" strokeLinecap="round" />
-        <path d="M 19.5 3.2 L 25 6.2 L 18.2 8.6" fill="none" stroke="var(--kn-muted)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+        {/* shaft + filled triangular head = reads as an arrow at deck scale */}
+        <line x1="2" y1="9" x2="20" y2="9" stroke="var(--kn-muted)" strokeWidth="2.2" strokeLinecap="round" />
+        <path d="M 19 3.5 L 28 9 L 19 14.5 Z" fill="var(--kn-muted)" />
       </svg>
     )
   }
