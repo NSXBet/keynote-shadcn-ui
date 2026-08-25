@@ -17,6 +17,22 @@ const toneColor: Record<NonNullable<FlowStep["tone"]>, string | undefined> = {
   danger: "var(--kn-danger)",
 }
 
+function FlowArrow({ arrow }: { arrow: React.ReactNode }) {
+  if (typeof arrow === "string" && arrow === "→") {
+    return (
+      <svg width={26} height={18} aria-hidden style={{ display: "block", flex: "0 0 auto" }}>
+        <line x1={1} y1={9} x2={19} y2={9} stroke="var(--kn-muted)" strokeWidth="1.5" />
+        <path d="M 15 4 L 21 9 L 15 14" fill="none" stroke="var(--kn-muted)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    )
+  }
+  return (
+    <span aria-hidden style={{ color: "var(--kn-muted)", fontSize: "1.3rem", fontWeight: 300, userSelect: "none" }}>
+      {arrow}
+    </span>
+  )
+}
+
 export function Flow({
   steps,
   arrow = "→",
@@ -60,12 +76,7 @@ export function Flow({
               {step.label}
             </div>
             {!last && (
-              <span
-                aria-hidden
-                style={{ color: "var(--kn-muted)", fontSize: "1.3rem", fontWeight: 300, userSelect: "none" }}
-              >
-                {arrow}
-              </span>
+              <FlowArrow arrow={arrow} />
             )}
           </React.Fragment>
         )

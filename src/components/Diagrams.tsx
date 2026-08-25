@@ -31,6 +31,37 @@ export interface DecisionBranch {
   tone?: "success" | "danger" | "accent" | "warning"
   outcome?: React.ReactNode
 }
+
+function Arrow({ label, color = "var(--kn-muted)", height = 26 }: { label?: string; color?: string; height?: number }) {
+  const w = 40
+  const cx = w / 2
+  return (
+    <div style={{ position: "relative", height, width: w, display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <svg width={w} height={height} style={{ display: "block" }}>
+        <line x1={cx} y1={0} x2={cx} y2={height - 7} stroke={color} strokeWidth="1.5" />
+        <path d={`M ${cx - 4} ${height - 8} L ${cx} ${height - 1} L ${cx + 4} ${height - 8}`} fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+      {label != null && (
+        <span
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%,-50%)",
+            background: "var(--kn-background)",
+            padding: "0 0.35rem",
+            fontSize: "0.8rem",
+            fontWeight: 600,
+            color: "var(--kn-muted)",
+          }}
+        >
+          {label}
+        </span>
+      )}
+    </div>
+  )
+}
+
 export function DecisionTree({
   root,
   branches,
@@ -41,18 +72,44 @@ export function DecisionTree({
   branchArrowLabels?: string[]
 }) {
   return (
-    <div className="kn-decision" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem" }}>
+    <div className="kn-decision" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 0 }}>
       <div style={box("accent")}>{root}</div>
-      <div style={{ display: "flex", gap: "2.5rem", justifyContent: "center", flexWrap: "wrap" }}>
+      {/* fan-out connector: root splits into each branch */}
+      <svg width={Math.max(branches.length * 180, 240)} height={30} style={{ display: "block", overflow: "visible" }}>
+        {branches.map((_, i) => {
+          const total = Math.max(branches.length * 180, 240)
+          const fromX = total / 2
+          const toX = (total / branches.length) * (i + 0.5)
+          return (
+            <g key={i}>
+              <path
+                d={`M ${fromX} 0 C ${fromX} 18, ${toX} 12, ${toX} 24`}
+                fill="none"
+                stroke="var(--kn-border-strong)"
+                strokeWidth="1.5"
+              />
+              <path d={`M ${toX - 4} 20 L ${toX} 27 L ${toX + 4} 20`} fill="none" stroke="var(--kn-border-strong)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              {branchArrowLabels?.[i] != null && (
+                <text
+                  x={(fromX + toX) / 2}
+                  y={12}
+                  textAnchor="middle"
+                  style={{ fontSize: "0.78rem", fontWeight: 600, fill: "var(--kn-muted)" }}
+                >
+                  {branchArrowLabels[i]}
+                </text>
+              )}
+            </g>
+          )
+        })}
+      </svg>
+      <div style={{ display: "flex", gap: "2.5rem", justifyContent: "center", flexWrap: "wrap", alignItems: "flex-start" }}>
         {branches.map((b, i) => (
-          <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem" }}>
-            <span style={{ color: "var(--kn-muted)", fontSize: "0.85rem" }}>
-              ↓ {branchArrowLabels?.[i] ?? ""}
-            </span>
+          <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", width: 180 }}>
             <div style={box(b.tone)}>{b.label}</div>
             {b.outcome != null && (
               <>
-                <span style={{ color: "var(--kn-muted)", fontSize: "0.85rem" }}>↓</span>
+                <Arrow height={26} />
                 <div style={{ ...box(), fontWeight: 400, color: "var(--kn-muted)", fontSize: "0.9rem" }}>{b.outcome}</div>
               </>
             )}
