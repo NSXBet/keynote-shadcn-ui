@@ -21,13 +21,29 @@ export type { TagProps } from "./components/Text"
 
 export { Table, THead, TBody, Tr, Th, Td } from "./components/Table"
 
-export { DonutChart } from "./components/Chart"
-export type { DonutChartProps, DonutSlice } from "./components/Chart"
-export { BarChart, LineChart, AreaChart } from "./components/CategoricalChart"
-export type { CategoricalChartProps } from "./components/CategoricalChart"
-export { RadarChart, RadialChart } from "./components/RadialCharts"
-export type { RadarChartProps, RadialChartProps, RadialSlice } from "./components/RadialCharts"
-export type { ChartConfig, ChartConfigEntry } from "./components/ChartCore"
+/* Charts — everything chart-related under components/Charts */
+export {
+  DonutChart,
+  BarChart,
+  LineChart,
+  AreaChart,
+  RadarChart,
+  RadialChart,
+  ChartTooltipContent,
+  ChartLegend,
+  seriesColor,
+  resolveColor,
+} from "./components/Charts"
+export type {
+  DonutChartProps,
+  DonutSlice,
+  CategoricalChartProps,
+  RadarChartProps,
+  RadialChartProps,
+  RadialSlice,
+  ChartConfig,
+  ChartConfigEntry,
+} from "./components/Charts"
 
 export { Flow } from "./components/Flow"
 export type { FlowStep } from "./components/Flow"
