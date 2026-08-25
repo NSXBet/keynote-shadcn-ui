@@ -1,4 +1,5 @@
 import * as React from "react"
+import { BuildScope, countFragments } from "./Fragment"
 
 /* Deck — the chrome that turns a list of slides into a navigable keynote.
  * Keyboard nav (←/→, Home/End), N/M pager, top progress hairline, and an
@@ -23,17 +24,34 @@ export function Deck({ children, initial = 0, pager = true, progress = true, ove
   const count = slides.length
   const [index, setIndex] = React.useState(Math.min(Math.max(initial, 0), count - 1))
   const [outline, setOutline] = React.useState(false)
+  const [cursor, setCursor] = React.useState(0)
+  const fragCounts = React.useMemo(() => slides.map((s) => countFragments(s)), [slides])
 
   const go = React.useCallback(
     (next: number) => {
       setIndex((cur) => {
         const clamped = Math.min(Math.max(next, 0), count - 1)
-        if (clamped !== cur) onSlide?.(clamped)
+        if (clamped !== cur) {
+          onSlide?.(clamped)
+          setCursor(0)
+        }
         return clamped
       })
     },
     [count, onSlide]
   )
+
+  // next/prev honor in-slide builds: reveal next build, advance when none remain
+  const next = React.useCallback(() => {
+    const remaining = fragCounts[index] ?? 0
+    if (cursor < remaining) setCursor((c) => c + 1)
+    else go(index + 1)
+  }, [cursor, index, fragCounts, go])
+
+  const prev = React.useCallback(() => {
+    if (cursor > 0) setCursor((c) => c - 1)
+    else go(index - 1)
+  }, [cursor, index, go])
 
   React.useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -42,14 +60,14 @@ export function Deck({ children, initial = 0, pager = true, progress = true, ove
         return
       }
       if (outline) return
-      if (e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") go(index + 1)
-      else if (e.key === "ArrowLeft" || e.key === "PageUp") go(index - 1)
+      if (e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") next()
+      else if (e.key === "ArrowLeft" || e.key === "PageUp") prev()
       else if (e.key === "Home") go(0)
       else if (e.key === "End") go(count - 1)
     }
     window.addEventListener("keydown", onKey)
     return () => window.removeEventListener("keydown", onKey)
-  }, [index, count, go, outline, overview])
+  }, [index, count, go, next, prev, outline, overview])
 
   const jump = (i: number) => {
     go(i)
@@ -81,7 +99,9 @@ export function Deck({ children, initial = 0, pager = true, progress = true, ove
           />
         </div>
       )}
-      <div style={{ width: "100%", height: "100%", minHeight: "100vh" }}>{slides[index]}</div>
+      <div style={{ width: "100%", height: "100%", minHeight: "100vh" }}>
+        <BuildScope shown={cursor}>{slides[index]}</BuildScope>
+      </div>
       {overview && outline && (
         <div
           role="dialog"
@@ -161,7 +181,7 @@ export function Deck({ children, initial = 0, pager = true, progress = true, ove
       )}
       {pager && (
         <button
-          onClick={() => go(index + 1)}
+          onClick={next}
           aria-label={`Slide ${index + 1} of ${count}. Next slide.`}
           style={{
             position: "fixed",
