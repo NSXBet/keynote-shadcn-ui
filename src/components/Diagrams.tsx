@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Connector } from "./Connector"
+import { Connector, ArrowHead } from "./Connector"
 
 /* Presentation diagrams — custom, token-driven. No shadcn analogs.
  * All share the same box/arrow language as Flow. */
@@ -84,11 +84,8 @@ export function DecisionTree({
                 stroke="var(--kn-border-strong)"
                 strokeWidth="2.2"
               />
-              {/* filled triangular head at the end of the curved edge */}
-              <path
-                d={`M ${toX - 4.5} 20 L ${toX} 26 L ${toX + 4.5} 20 Z`}
-                fill="var(--kn-border-strong)"
-              />
+              {/* shared filled head — same geometry as Connector */}
+              <ArrowHead x={toX} y={24} size={10} color="var(--kn-border-strong)" />
               {branchArrowLabels?.[i] != null && (
                 <text
                   x={(fromX + toX) / 2}

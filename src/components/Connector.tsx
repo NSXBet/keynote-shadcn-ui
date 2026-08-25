@@ -25,6 +25,13 @@ export interface ConnectorProps {
 
 const dirAngle: Record<ConnectorDirection, number> = { right: 0, down: 90, left: 180, up: -90 }
 
+/* ArrowHead — the filled triangular pointer, shared by Connector and any
+ * custom connector shape (e.g. DecisionTree's fan-out). Define once. */
+export function ArrowHead({ x, y, size = 10, color = "var(--kn-muted)" }: { x: number; y: number; size?: number; color?: string }) {
+  const s = size / 2
+  return <path d={`M ${x - s} ${y - s * 0.9} L ${x} ${y + s} L ${x + s} ${y - s * 0.9} Z`} fill={color} />
+}
+
 export function Connector({
   direction = "right",
   curve = "straight",
