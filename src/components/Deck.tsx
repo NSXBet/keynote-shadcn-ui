@@ -65,13 +65,17 @@ export function Deck({ children, initial = 0, pager = true, progress = true, ove
         const clamped = Math.min(Math.max(next, 0), count - 1)
         if (clamped !== cur) {
           onSlide?.(clamped)
-          if (cursorOverride === undefined) setCursor(0)
+          // start with the first build visible so the slide isn't blank on arrival
+          if (cursorOverride === undefined) {
+            const frags = fragCounts[clamped] ?? 0
+            setCursor(frags > 0 ? 1 : 0)
+          }
         }
         return clamped
       })
       if (cursorOverride !== undefined) setPendingCursor(cursorOverride)
     },
-    [count, onSlide]
+    [count, onSlide, fragCounts]
   )
 
   // next/prev honor in-slide builds: reveal next build, advance when none remain
