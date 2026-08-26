@@ -86,12 +86,9 @@ export function Deck({ children, initial = 0, pager = true, progress = true, ove
   }, [cursor, index, fragCounts, go])
 
   const prev = React.useCallback(() => {
+    // ← undoes ONE build (exits with inverse animation); at cursor 0, goes to prior slide
     if (cursor > 0) setCursor((c) => c - 1)
-    else {
-      const target = index - 1
-      // re-visiting a prior slide restores all its builds (you already saw them)
-      go(target, fragCounts[target] ?? 0)
-    }
+    else go(index - 1)
   }, [cursor, index, go, fragCounts])
 
   React.useEffect(() => {

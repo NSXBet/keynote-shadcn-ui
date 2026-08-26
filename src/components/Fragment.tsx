@@ -26,13 +26,17 @@ export interface FragmentProps {
   style?: React.CSSProperties
 }
 
+/* For each animation, the hidden state reads as the INVERSE exit when
+ * cursor moves backward: forward reveals (from hidden→shown), backward
+ * exits (from shown→hidden). hiddenBy[*] is both the enter-from and
+ * exit-to state — so backward actually reverses the animation. */
 const hiddenBy: Record<FragmentAnimation, React.CSSProperties> = {
   appear: { opacity: 0 },
   fade: { opacity: 0 },
-  "slide-left": { opacity: 0, transform: "translateX(24px)" },
-  "slide-right": { opacity: 0, transform: "translateX(-24px)" },
-  "slide-up": { opacity: 0, transform: "translateY(24px)" },
-  "slide-down": { opacity: 0, transform: "translateY(-24px)" },
+  "slide-left": { opacity: 0, transform: "translateX(24px)" },  // enter from (or exit to) left
+  "slide-right": { opacity: 0, transform: "translateX(-24px)" }, // enter from (or exit to) right
+  "slide-up": { opacity: 0, transform: "translateY(24px)" },     // from below / exit below
+  "slide-down": { opacity: 0, transform: "translateY(-24px)" },  // from above / exit above
   zoom: { opacity: 0, transform: "scale(0.92)" },
 }
 const shownState: React.CSSProperties = { opacity: 1, transform: "none" }
