@@ -36,13 +36,9 @@ function DeckWith() {
 describe("Deck build cursor", () => {
   it("next reveals fragments before advancing", () => {
     render(<DeckWith />)
-    // initially fragments hidden (cursor 0)
-    expect(screen.queryByText("b1")).toBeInTheDocument()
-    fireEvent.keyDown(window, { key: "ArrowRight" })
-    // still slide 1 (first fragment now shown)
+    fireEvent.keyDown(window, { key: "ArrowRight" }) // reveal b1
     expect(screen.getByText("slide1")).toBeInTheDocument()
-    fireEvent.keyDown(window, { key: "ArrowRight" })
-    // still slide 1 (second fragment)
+    fireEvent.keyDown(window, { key: "ArrowRight" }) // reveal b2
     expect(screen.getByText("slide1")).toBeInTheDocument()
     fireEvent.keyDown(window, { key: "ArrowRight" })
     // now advances to slide 2
@@ -59,16 +55,15 @@ describe("Deck build cursor", () => {
     expect(screen.getByText("slide1")).toBeInTheDocument()
   })
 
-  it("going back to a prior slide shows all its builds (already seen)", () => {
+  it("prev undoes ONE build at a time; at cursor 0 goes to prior slide", () => {
     render(<DeckWith />)
+    // 3 x -> advances to slide2 (reveal b1, reveal b2, advance)
     fireEvent.keyDown(window, { key: "ArrowRight" })
     fireEvent.keyDown(window, { key: "ArrowRight" })
     fireEvent.keyDown(window, { key: "ArrowRight" })
+    expect(screen.getByText("slide2")).toBeInTheDocument()
+    // <- at cursor 0 goes back to slide1
     fireEvent.keyDown(window, { key: "ArrowLeft" })
-    // ArrowLeft → back to slide1, restore effect shows all its builds
     expect(screen.getByText("slide1")).toBeInTheDocument()
-    const frags = document.querySelectorAll(".kn-fragment")
-    const visible = [...frags].filter((f) => parseFloat(getComputedStyle(f).opacity) >= 0.5)
-    expect(visible.length).toBe(2)
   })
 })

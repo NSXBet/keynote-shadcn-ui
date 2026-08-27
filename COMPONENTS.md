@@ -14,6 +14,25 @@ Every component: typed API, one-line purpose, the Storybook story that demos it.
 | `SectionSlide` | Hero section-break slide | `kicker`, `title`, `subtitle`, `image` | `keynote-keynote--section-break` |
 | `SectionDivider` | Alias of `SectionSlide` | same | `keynote-keynote--divider` |
 
+## Slide layout (Hallmark · component: slide-layout engine · genre: editorial)
+
+`<Slide layout="...">` picks vertical distribution for non-hero slides:
+- `top` (default) — stack from the top of the frame.
+- `center` — vertical centering.
+- `spread` — flex space-between; content claims full height. Use for trees, diagrams, tables, images, quotes.
+
+The easiest path to a correct fit: pick `spread` when a slide has one structural block (tree/table/image) that would otherwise dump at the top.
+
+### Layout containers — variety without wall-of-text
+
+| Component | Purpose | Key props |
+|---|---|---|
+| `TwoColumns` / `ThreeColumns` | Grid container for arbitrary content | `count`, `gap`, `align`, `style` |
+| `ColumnAndImage` | Text column + masked image (image right) | `image`, `imageShape`, `imageSide`, `imageWidth`, `imageAspectRatio`, `gap` |
+| `ImageAndColumn` | Same, image left | same |
+
+Compose inside a `Part` so `Slide` auto-spreads: `<Part><Subtitle/>…</Part><Part><TwoColumns>…</TwoColumns></Part>`. Alternate `ColumnAndImage` / `ImageAndColumn` across consecutive slides for visual variety.
+
 ## Text
 
 | Component | Purpose | Story |

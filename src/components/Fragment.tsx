@@ -55,7 +55,7 @@ const OrderContext = React.createContext<{ next: () => number }>({ next: () => 0
 export function Fragment({
   children,
   animation = "fade",
-  durationMs = 240,
+  durationMs = 110,
   always = false,
   className = "",
   style,
@@ -97,12 +97,25 @@ export function BuildScope({ shown, children }: { shown: number; children: React
   )
 }
 
+/* countFragments — count Fragment descendants in a React tree. Components that
+ * render Fragments internally export a static fragmentCount(element) handler here,
+ * keyed by component type, so the count is derivable from props alone (no render). */
+type FragmentCounter = (el: React.ReactElement) => number
+const fragmentCounters = new Map<React.ElementType, FragmentCounter>()
+
+/** Register a static counter for a component that renders internal Fragments. */
+export function registerFragmentCounter(type: React.ElementType, fn: FragmentCounter) {
+  fragmentCounters.set(type, fn)
+}
+
 /* countFragments — count Fragment descendants in a React tree. */
 export function countFragments(node: React.ReactNode): number {
   let n = 0
   React.Children.forEach(node, (child) => {
     if (!React.isValidElement(child)) return
     if (child.type === Fragment) n += 1
+    const counter = fragmentCounters.get(child.type as React.ElementType)
+    if (counter) n += counter(child)
     if (child.props?.children) n += countFragments(child.props.children)
   })
   return n

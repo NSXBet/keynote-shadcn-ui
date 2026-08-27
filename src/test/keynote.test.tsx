@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react"
 import { describe, it, expect, vi } from "vitest"
-import { Section, SectionDivider, SectionSlide, Stat, Quote, SpeakerNotes, Deck, Slide, Subtitle } from "../index"
+import { Section, SectionDivider, SectionSlide, Stat, Quote, SpeakerNotes, Deck, Slide, Part, Subtitle } from "../index"
 
 describe("Section", () => {
   it("renders kicker + heading + children", () => {
@@ -15,6 +15,29 @@ describe("Section", () => {
   })
 })
 
+describe("Slide layout", () => {
+  it("spread sets space-between justifyContent", () => {
+    render(<Slide layout="spread"><b>a</b></Slide>)
+    expect(document.querySelector(".kn-slide")).toBeTruthy()
+    const s = document.querySelector(".kn-slide") as HTMLElement
+    expect(s.style.justifyContent).toBe("space-between")
+  })
+  it("auto-spread when 2+ Part children", () => {
+    render(
+      <Slide>
+        <Part>t</Part>
+        <Part>x</Part>
+      </Slide>
+    )
+    const s = document.querySelector(".kn-slide") as HTMLElement
+    expect(s.style.justifyContent).toBe("space-between")
+  })
+  it("no auto-spread with one Part", () => {
+    render(<Slide><Part>t</Part></Slide>)
+    const s = document.querySelector(".kn-slide") as HTMLElement
+    expect(s.style.justifyContent).toBe("flex-start")
+  })
+})
 describe("SectionSlide", () => {
   it("is the hero section-break (alias of SectionDivider)", () => {
     render(<SectionSlide kicker="Act 1" title="Why" />)

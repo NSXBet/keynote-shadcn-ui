@@ -5,10 +5,55 @@ import { BuildScope, countFragments } from "./Fragment"
  * Keyboard nav (←/→, Home/End), N/M pager, top progress hairline, and an
  * ESC-triggered outline grid of all slides for quick navigation. */
 
+export type SlideTransition = "fade" | "slide-left" | "slide-right" | "none"
+
+/* SlideFrame — animates the slide swap. On mount (id change), starts in the
+ * hidden enter state (dir-aware for slides) and moves to shown on the next frame. */
+function SlideFrame({
+  id,
+  dir,
+  transition,
+  durationMs,
+  children,
+}: {
+  id: number
+  dir: number
+  transition: SlideTransition
+  durationMs: number
+  children: React.ReactNode
+}) {
+    /* mount-triggered CSS keyframes: runs every time this div is created (id changes) */
+  const keyframe = transition === "none" ? "" :
+    transition === "fade" ? `kn-slide-fade` :
+    transition === "slide-left" ? `kn-slide-left` : `kn-slide-right-${dir >= 0 ? "fwd" : "bak"}`
+  return (
+    <>
+      <style>{`
+        @keyframes kn-slide-fade{from{opacity:0}}
+        @keyframes kn-slide-left{from{opacity:0;transform:translateX(-2rem)}}
+        @keyframes kn-slide-right-fwd{from{opacity:0;transform:translateX(2rem)}}
+        @keyframes kn-slide-right-bak{from{opacity:0;transform:translateX(-2rem)}}
+      `}</style>
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          animation: transition !== "none" ? `${keyframe} ${durationMs}ms var(--kn-ease-out)` : undefined,
+        }}
+      >
+        {children}
+      </div>
+    </>
+  )
+}
 export interface DeckProps {
   children: React.ReactNode[]
   /** start index (default 0) */
   initial?: number
+  /** transition between slides (default "fade") */
+  transition?: SlideTransition
+  /** duration of the slide transition in ms (default 500) */
+  transitionMs?: number
   /** show the N/M pager (default true) */
   pager?: boolean
   /** show the top progress hairline (default true) */
@@ -19,7 +64,16 @@ export interface DeckProps {
   onSlide?: (index: number) => void
 }
 
-export function Deck({ children, initial = 0, pager = true, progress = true, overview = true, onSlide }: DeckProps) {
+export function Deck({
+  children,
+  initial = 0,
+  transition = "fade",
+  transitionMs = 500,
+  pager = true,
+  progress = true,
+  overview = true,
+  onSlide,
+}: DeckProps) {
   const slides = React.Children.toArray(children)
   const count = slides.length
   // read initial index from URL hash (#3 = slide 3), so reload restores position
@@ -58,21 +112,20 @@ export function Deck({ children, initial = 0, pager = true, progress = true, ove
     }
   }, [index, pendingCursor])
 
+  const indexRef = React.useRef(index)
+  indexRef.current = index
+  // direction of last nav chooses the slide flavor: +1 forward → enter-from-right, -1 backward → enter-from-left
+  const dirRef = React.useRef(1)
   const go = React.useCallback(
     (next: number, cursorOverride?: number) => {
       interacted.current = true
-      setIndex((cur) => {
-        const clamped = Math.min(Math.max(next, 0), count - 1)
-        if (clamped !== cur) {
-          onSlide?.(clamped)
-          // start with the first build visible so the slide isn't blank on arrival
-          if (cursorOverride === undefined) {
-            const frags = fragCounts[clamped] ?? 0
-            setCursor(frags > 0 ? 1 : 0)
-          }
-        }
-        return clamped
-      })
+      const clamped = Math.min(Math.max(next, 0), count - 1)
+      if (clamped !== indexRef.current) {
+        dirRef.current = clamped - indexRef.current
+        onSlide?.(clamped)
+        if (cursorOverride === undefined) setCursor(0)
+      }
+      setIndex(clamped)
       if (cursorOverride !== undefined) setPendingCursor(cursorOverride)
     },
     [count, onSlide, fragCounts]
@@ -87,9 +140,9 @@ export function Deck({ children, initial = 0, pager = true, progress = true, ove
 
   const prev = React.useCallback(() => {
     // ← undoes ONE build (exits with inverse animation); at cursor 0, goes to prior slide
-    if (cursor > 0) setCursor((c) => c - 1)
-    else go(index - 1)
-  }, [cursor, index, go, fragCounts])
+    if (cursor > 0) setCursor(cursor - 1)
+    else go(index - 1, fragCounts[index - 1] ?? 0)
+  }, [cursor, index, fragCounts, go])
 
   React.useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -111,6 +164,11 @@ export function Deck({ children, initial = 0, pager = true, progress = true, ove
     go(i)
     setOutline(false)
   }
+
+  const reducedMotion =
+    typeof window !== "undefined" && !!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+  const doTransition = transition !== "none" && !reducedMotion
+  const dir = dirRef.current >= 0 ? 1 : -1
 
   return (
     <div className="kn-deck" style={{ position: "relative", width: "100%", height: "100vh" }}>
@@ -138,7 +196,15 @@ export function Deck({ children, initial = 0, pager = true, progress = true, ove
         </div>
       )}
       <div style={{ width: "100%", height: "100%", minHeight: "100vh" }}>
-        <BuildScope shown={cursor}>{slides[index]}</BuildScope>
+        <SlideFrame
+          key={index}
+          id={index}
+          dir={dir}
+          transition={doTransition ? transition : "none"}
+          durationMs={transitionMs}
+        >
+          <BuildScope key={index} shown={cursor}>{slides[index]}</BuildScope>
+        </SlideFrame>
       </div>
       {overview && outline && (
         <div

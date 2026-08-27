@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react"
 import { describe, it, expect } from "vitest"
-import { DecisionTree, Process, Timeline, Cycle, Comparison, Funnel } from "../index"
+import { DecisionTree, Process, Timeline, Cycle, Comparison, Funnel, Flow, countFragments } from "../index"
 
 describe("DecisionTree", () => {
   it("renders root, branches, outcomes", () => {
@@ -72,5 +72,14 @@ describe("Funnel", () => {
     const stages = container.querySelectorAll(".kn-funnel > div")
     expect(stages[0]).toHaveStyle({ width: "100%" })
     expect(stages[1]).toHaveStyle({ width: "50%" })
+  })
+})
+
+describe("Flow build integration", () => {
+  it("countFragments sees Flow's internal builds (steps-1: arrow+box per step)", () => {
+    const tree = (
+      <Flow steps={[{ label: "A" }, { label: "B", tone: "accent" }, { label: "C", tone: "success" }]} />
+    )
+    expect(countFragments(tree)).toBe(2)
   })
 })

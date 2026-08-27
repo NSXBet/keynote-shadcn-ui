@@ -2,7 +2,7 @@
 import * as React from "react"
 import * as ReactDOM from "react-dom"
 export { React, ReactDOM }
-export { Slide } from "./components/Slide"
+export { Slide, Part } from "./components/Slide"
 export type { SlideProps } from "./components/Slide"
 
 export {
@@ -69,6 +69,7 @@ export { SlideTransitionView } from "./components/SlideTransition"
 export type { SlideTransitionProps, SlideTransition } from "./components/SlideTransition"
 export { Connector, ArrowHead } from "./components/Connector"
 export type { ConnectorProps, ConnectorDirection, ConnectorCurve } from "./components/Connector"
+export { Columns, TwoColumns, ThreeColumns, ColumnAndImage, ImageAndColumn } from "./components/Layout"
 export { MaskedImage } from "./components/MaskedImage"
 export type { MaskedImageProps, MaskShape } from "./components/MaskedImage"
 export {
